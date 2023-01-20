@@ -26,6 +26,16 @@ export default function Navbar() {
               Login
             </Typography>
           </Link>
+          <Link to='/register'>
+            <Typography
+              variant='h6'
+              color='inherit'
+              component='div'
+              sx={{ mr: 2, color: 'black' }}
+            >
+              Register
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

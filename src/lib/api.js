@@ -3,7 +3,8 @@ import { AUTH } from './auth';
 
 const ENDPOINTS = {
   login: '/api/auth/login/',
-  register: '/api/auth/register/'
+  register: '/api/auth/register/',
+  cloudinary: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
 };
 
 const getHeaders = () => ({
