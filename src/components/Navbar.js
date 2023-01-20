@@ -1,5 +1,5 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
@@ -14,6 +14,16 @@ export default function Navbar() {
               sx={{ mr: 2, color: 'black' }}
             >
               Home
+            </Typography>
+          </Link>
+          <Link to='/foodlog'>
+            <Typography
+              variant='h6'
+              color='inherit'
+              component='div'
+              sx={{ mr: 2, color: 'black' }}
+            >
+              Food Log
             </Typography>
           </Link>
           <Link to='/login'>
