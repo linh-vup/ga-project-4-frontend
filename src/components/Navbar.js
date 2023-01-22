@@ -16,14 +16,34 @@ export default function Navbar() {
               Home
             </Typography>
           </Link>
-          <Link to='/foodlog'>
+          <Link to='/foodlog/today'>
             <Typography
               variant='h6'
               color='inherit'
               component='div'
               sx={{ mr: 2, color: 'black' }}
             >
-              Food Log
+              Food Log Today
+            </Typography>
+          </Link>
+          <Link to='/foodlog/yesterday'>
+            <Typography
+              variant='h6'
+              color='inherit'
+              component='div'
+              sx={{ mr: 2, color: 'black' }}
+            >
+              Food Log Yesterday
+            </Typography>
+          </Link>
+          <Link to='/colors'>
+            <Typography
+              variant='h6'
+              color='inherit'
+              component='div'
+              sx={{ mr: 2, color: 'black' }}
+            >
+              Colors
             </Typography>
           </Link>
           <Link to='/login'>

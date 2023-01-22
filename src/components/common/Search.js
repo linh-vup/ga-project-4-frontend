@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../../lib/api';
 
-export default function Search() {
+export default function Search({ handleChange }) {
   const [foods, setFoods] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
   const [query, setQuery] = useState('');
@@ -50,9 +50,7 @@ export default function Search() {
       <Autocomplete
         options={query ? filteredFoods : foods}
         getOptionLabel={(food) => food.name}
-        // onChange={(event, newValue) => {
-        //   navigate(`/foods/${newValue.id}`);
-        // }}
+        onChange={handleChange}
         // Don't use build in matching logic, as it just filters through food names, but we use API query to manually control autocomplete list
         filterOptions={(food) => food}
         renderInput={(params) => (

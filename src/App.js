@@ -5,6 +5,10 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import FoodLog from './components/FoodLog';
+import Colors from './components/Colors';
+import FoodLogYesterday from './components/FoodLogYesterday';
+
+window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {
   return (
@@ -14,7 +18,9 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/foodlog' element={<FoodLog />} />
+        <Route path='/foodlog/today' element={<FoodLog />} />
+        <Route path='/foodlog/yesterday' element={<FoodLogYesterday />} />
+        <Route path='/colors' element={<Colors />} />
       </Routes>
     </Router>
   );
