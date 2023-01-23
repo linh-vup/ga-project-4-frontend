@@ -7,6 +7,7 @@ import Register from './components/Register';
 import FoodLog from './components/FoodLog';
 import Colors from './components/Colors';
 import FoodLogYesterday from './components/FoodLogYesterday';
+import PastFoodLog from './components/PastFoodLog';
 
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/foodlog/today' element={<FoodLog />} />
         <Route path='/foodlog/yesterday' element={<FoodLogYesterday />} />
+        <Route path='/foodlog/past' element={<PastFoodLog />} />
         <Route path='/colors' element={<Colors />} />
       </Routes>
     </Router>

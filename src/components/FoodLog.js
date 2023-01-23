@@ -5,6 +5,7 @@ import { AUTH } from '../lib/auth';
 
 import Search from './common/Search';
 import FoodListItem from './common/FoodListItem';
+import Calendar from './common/Calendar';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -128,6 +129,7 @@ export default function FoodLog() {
     <>
       <CssBaseline />
       <Container maxWidth='lg'>
+        <Calendar />
         <Search handleChange={handleSearchOnChange} />
         <p>Today I ate:</p>
         <ul>
