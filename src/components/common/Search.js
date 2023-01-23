@@ -32,19 +32,6 @@ export default function Search({ handleChange }) {
     });
   }, [query]);
 
-  // console.log('Product Data from Search2', foods);
-  // console.log('Filtered Product Data from Search2', filteredFoods);
-
-  // useEffect(() => {
-  //   const clearup = () => {
-  //     // setIsOpen(false);
-  //     setQuery('');
-  //     setFilteredFoods([]);
-  //   };
-
-  //   return clearup;
-  // }, []);
-
   return (
     <Stack spacing={2} sx={{ width: 600 }}>
       <Autocomplete

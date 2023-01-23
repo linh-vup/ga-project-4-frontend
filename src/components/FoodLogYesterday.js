@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { API } from '../lib/api';
 import { AUTH } from '../lib/auth';
 import FoodListItem from './common/FoodListItem';
+import FoodListItem2 from './common/FoodListItem2';
 
 export default function FoodLogYesterday() {
   const [yesterdaysUserDay, setYesterdaysUserDay] = useState();
@@ -40,15 +41,11 @@ export default function FoodLogYesterday() {
       .catch(({ message, response }) => console.error(message, response));
   }, [userDayId, yesterday, userId]);
 
-  // useEffect(() => {
-  //   API.GET(API.ENDPOINTS.singleUserDay(userDayId))
-  //     .then(({ data }) => {
-  //       console.log(data);
-  //       setFoods(data.foods_consumed);
-  //       console.log('FOOD LOG FROM SINGE USERDAY', data.foods_consumed);
-  //     })
-  //     .catch(({ message, response }) => console.error(message, response));
-  // }, []);
+  const handleDelete = (e, value) => {
+    console.info('You clicked the delete icon.');
+    console.log('You clicked', e.target.value);
+    console.log('Value', value);
+  };
 
   if (yesterdaysUserDay === null) {
     return <p>Loading</p>;
@@ -57,7 +54,11 @@ export default function FoodLogYesterday() {
     <>
       <p>yesterday's food console log</p>
       {foods?.map((food) => (
-        <FoodListItem foodItem={food.name} />
+        <FoodListItem2
+          foodItem={food.name}
+          onClick={handleDelete}
+          value={food.id}
+        />
       ))}
     </>
   );

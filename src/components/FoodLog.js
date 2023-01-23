@@ -6,6 +6,10 @@ import { AUTH } from '../lib/auth';
 import Search from './common/Search';
 import FoodListItem from './common/FoodListItem';
 
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+
 export default function FoodLog() {
   // const [isUpdated, setIsUpdated] = useState(false);
   const [userDay, setUserDay] = useState({
@@ -18,16 +22,6 @@ export default function FoodLog() {
   const [id, setId] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
 
-  // const [date, setDate] = useState('');
-  // const [userId, setUserId] = useState();
-
-  // useEffect(() => {
-  //   API.POST(API.ENDPOINTS.singleUserDay(id)).then(({ data }) => {
-  //     console.log(data);
-  //     setUserDay({ ...userDay, user: id });
-  //   }, []);
-  // });
-
   useEffect(() => {
     setUserDay((userDay) => ({
       ...userDay,
@@ -37,17 +31,6 @@ export default function FoodLog() {
   }, []);
 
   console.log(userDay);
-
-  // useEffect(() => {
-  //   if (userDay.foods_consumed !== null) {
-  //     API.GET(API.ENDPOINTS.singleUserDay(id))
-  //       .then(({ data }) => {
-  //         console.log('Data from inside call single user day', data);
-  //         setFoods(data.foods_consumed);
-  //       })
-  //       .catch(({ message, response }) => console.error(message, response));
-  //   }
-  // }, [id]);
 
   useEffect(() => {
     const dateToday = new Date().toJSON().slice(0, 10);
@@ -123,22 +106,43 @@ export default function FoodLog() {
     }
   };
 
+  const handleDelete = (e, value) => {
+    // e.preventDefault();
+    console.info('You clicked the delete icon for', e);
+    const foodArray = [...userDay.foods_consumed];
+    console.log('FOODS ARRAY', foodArray);
+    // setUserDay((userDay) => ({
+    //   ...userDay,
+    //   // user: userIDFromSub,
+    //   // day_logged: date,
+    //   foods_consumed: userDay.foods_consumed.push(newValue.id)
+    //   // foods_consumed: [5]
+    // }));
+  };
+
   if (userDay === null) {
     return <p>Loading</p>;
   }
 
   return (
     <>
-      <Search handleChange={handleSearchOnChange} />
-      <p>Today I ate:</p>
-      <ul>
-        {foods?.map((food) => (
-          <li key={food.id}>
-            <FoodListItem foodItem={food?.name} />
-          </li>
-        ))}
-      </ul>
-      {/* <p> logged in user ID : {userId}</p> */}
+      <CssBaseline />
+      <Container maxWidth='lg'>
+        <Search handleChange={handleSearchOnChange} />
+        <p>Today I ate:</p>
+        <ul>
+          {foods?.map((food) => (
+            <li key={food.id}>
+              <FoodListItem
+                foodItem={food?.name}
+                handleDelete={handleDelete}
+                value={food?.id}
+              />
+            </li>
+          ))}
+        </ul>
+        {/* <p> logged in user ID : {userId}</p> */}
+      </Container>
     </>
   );
 }
