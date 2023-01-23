@@ -17,7 +17,7 @@ export default function Register() {
   const [error, setError] = useState(false);
   const [file, setFile] = useState(null);
 
-  const fileTypes = ['JPG', 'PNG', 'GIF'];
+  const fileTypes = ['JPG', 'JPEG', 'PNG', 'GIF'];
 
   const handleChange = (e) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });
@@ -49,13 +49,13 @@ export default function Register() {
 
       await API.POST(API.ENDPOINTS.register, apiReqBody);
 
-      // const loginData = await API.POST(API.ENDPOINTS.login, {
-      //   email: formFields.email,
-      //   password: formFields.password
-      // });
+      const loginData = await API.POST(API.ENDPOINTS.login, {
+        email: formFields.email,
+        password: formFields.password
+      });
 
-      // AUTH.setToken(loginData.data.token);
-      navigate('/');
+      AUTH.setToken(loginData.data.token);
+      navigate('/foodlog/today');
     } catch (e) {
       console.log(e);
       setError(e);
