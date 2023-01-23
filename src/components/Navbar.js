@@ -1,7 +1,18 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuthenticated } from '../hook/useAuthenticated';
+import { AUTH } from '../lib/auth';
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useAuthenticated();
+
+  const logout = () => {
+    AUTH.logout();
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+
   return (
     <Box sx={{ flexgrow: 1 }}>
       <AppBar position='static'>
@@ -16,26 +27,7 @@ export default function Navbar() {
               Home
             </Typography>
           </Link>
-          <Link to='/foodlog/today'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Food Log Today
-            </Typography>
-          </Link>
-          <Link to='/foodlog/yesterday'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Food Log Yesterday
-            </Typography>
-          </Link>
+
           <Link to='/colors'>
             <Typography
               variant='h6'
@@ -46,26 +38,63 @@ export default function Navbar() {
               Colors
             </Typography>
           </Link>
-          <Link to='/login'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Login
-            </Typography>
-          </Link>
-          <Link to='/register'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Register
-            </Typography>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to='/foodlog/today'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Food Log Today
+                </Typography>
+              </Link>
+              <Link to='/foodlog/yesterday'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Food Log Yesterday
+                </Typography>
+              </Link>
+              <Link to='/' onClick={logout}>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Logout
+                </Typography>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to='/login'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Login
+                </Typography>
+              </Link>
+              <Link to='/register'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Register
+                </Typography>
+              </Link>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

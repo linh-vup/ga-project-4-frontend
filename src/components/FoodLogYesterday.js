@@ -38,7 +38,7 @@ export default function FoodLogYesterday() {
           .catch(({ message, response }) => console.error(message, response));
       })
       .catch(({ message, response }) => console.error(message, response));
-  }, []);
+  }, [userDayId, yesterday, userId]);
 
   // useEffect(() => {
   //   API.GET(API.ENDPOINTS.singleUserDay(userDayId))

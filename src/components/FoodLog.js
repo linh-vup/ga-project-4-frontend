@@ -14,7 +14,7 @@ export default function FoodLog() {
     foods_consumed: []
   });
 
-  const [foods, setFoods] = useState();
+  const [foods, setFoods] = useState([]);
   const [id, setId] = useState(null);
   // const [date, setDate] = useState('');
   // const [userId, setUserId] = useState();
@@ -63,16 +63,26 @@ export default function FoodLog() {
     }));
 
     console.log('USER DAY', userDay);
-
-    API.POST(API.ENDPOINTS.createUserDay, userDay, API.getHeaders())
-      .then(({ data }) => {
-        setUserDay(data);
-        console.log('USER DAY DATA', data);
-        console.log('USER DAY DATA', data.id);
-        setId(data.id);
-      })
-      .catch(({ message, response }) => console.error(message, response));
+    if (id === null) {
+      API.POST(API.ENDPOINTS.createUserDay, userDay, API.getHeaders())
+        .then(({ data }) => {
+          setUserDay(data);
+          console.log('USER DAY DATA TO CREATE', data);
+          console.log('USER DAY DATA TO CREATE', data.id);
+          setId(data.id);
+        })
+        .catch(({ message, response }) => console.error(message, response));
+    } else {
+      API.PUT(API.ENDPOINTS.singleUserDay(id), userDay, API.getHeaders())
+        .then(({ data }) => {
+          setUserDay(data);
+          console.log('USER DAY DATA TO PUT', data);
+          setFoods(data.foods_consumed);
+        })
+        .catch(({ message, response }) => console.error(message, response));
+    }
   };
+
   if (userDay === null) {
     return <p>Loading</p>;
   }
@@ -83,7 +93,9 @@ export default function FoodLog() {
       <p>Today I ate:</p>
       <ul>
         {foods?.map((food) => (
-          <FoodListItem foodItem={food.name} />
+          <li key={food.name}>
+            <FoodListItem foodItem={food.name} />
+          </li>
         ))}
       </ul>
       {/* <p> logged in user ID : {userId}</p> */}
