@@ -35,7 +35,8 @@ export default function FoodListDisplay() {
     viewedDate.setMonth(id.slice(5, 7) - 1);
     viewedDate.setYear(id.slice(0, 4));
   } else if (location.pathname === '/foodlog/today') {
-    viewedDate.setDate(new Date());
+    viewedDate = new Date();
+    console.log('TODAY PATH VIEWDATE', viewedDate);
   }
   viewedDate = viewedDate.toJSON().slice(0, 10);
   console.log('viewedDate 2', viewedDate);
@@ -93,7 +94,7 @@ export default function FoodListDisplay() {
         }
       })
       .catch(({ message, response }) => console.error(message, response));
-  }, [userDayId, viewedDate, userId, isUpdated, id]);
+  }, [userDayId, viewedDate, userId, isUpdated]);
 
   const handleSearchOnChange = (e, newValue) => {
     setUserDay((userDay) => ({
