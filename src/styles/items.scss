@@ -8,16 +8,21 @@
 
 .red {
   border-color: rgb(242, 106, 102);
+  background-color: rgb(242, 106, 102, 0.5);
 }
 .orange-yellow {
   border-color: rgb(226, 226, 8);
+  background-color:rgb(226, 226, 8, 0.5);
 }
 .green {
   border-color: rgb(33, 151, 37);
+  background-color:rgb(33, 151, 37, 0.5);
 }
 .blue-purple {
   border-color: rgb(128, 128, 255);
+  background-color: rgb(128, 128, 255, 0.5);
 }
 .brown-white {
-  border-color: beige;
+  border-color: rgb(233, 233, 190);
+  background-color: rgb(233, 233, 190, 0.5);
 }

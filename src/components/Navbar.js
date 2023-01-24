@@ -1,11 +1,12 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useAuthenticated } from '../hook/useAuthenticated';
 import { AUTH } from '../lib/auth';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useAuthenticated();
+  const { id } = useParams();
 
   const logout = () => {
     AUTH.logout();
@@ -58,6 +59,26 @@ export default function Navbar() {
                   sx={{ mr: 2, color: 'black' }}
                 >
                   Food Log Yesterday
+                </Typography>
+              </Link>
+              <Link to='/foodlog/past/:id'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Food Log Past
+                </Typography>
+              </Link>
+              <Link to='/foodlog/stats'>
+                <Typography
+                  variant='h6'
+                  color='inherit'
+                  component='div'
+                  sx={{ mr: 2, color: 'black' }}
+                >
+                  Stats
                 </Typography>
               </Link>
               <Link to='/' onClick={logout}>

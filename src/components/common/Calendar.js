@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,7 +10,9 @@ export default function StaticDatePickerLandscape() {
   // const [value, setValue] = useState(dayjs('2022-04-07'));
 
   // const [date, setDate] = useState(dayjs('2022-04-07'));
-  const [date, setDate] = useState(dayjs(new Date()));
+  const { id } = useParams();
+  const [date, setDate] = useState(dayjs(id));
+  const navigate = useNavigate();
   const dateFormatted = new Date().toJSON().slice(0, 10);
 
   return (
@@ -26,7 +28,9 @@ export default function StaticDatePickerLandscape() {
           date={date}
           onChange={(newDate) => {
             setDate(newDate);
-            console.log(newDate.toJSON());
+            console.log('NEW DATE ON CHANGE', newDate.toJSON());
+            const navTo = newDate.toJSON().slice(0, 10);
+            navigate(`/foodlog/past/${navTo}`);
             console.log(new Date().toJSON());
           }}
         />

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { API } from '../../lib/api';
 import { AUTH } from '../../lib/auth';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Search from './Search';
 import FoodListItem2 from './FoodListItem2';
 
 import '../../styles/items.scss';
-import { color } from '@mui/system';
 
 export default function FoodListDisplay() {
   const [userDay, setUserDay] = useState({
@@ -23,22 +22,26 @@ export default function FoodListDisplay() {
   const [isUpdated, setIsUpdated] = useState(false);
   const [hasEatenRainbow, setHasEatenRainbow] = useState(false);
   const location = useLocation();
+  const { id } = useParams();
   // console.log(location);
 
   let viewedDate = new Date();
-  // console.log('viewedDate 1', viewedDate);
+  console.log('viewedDate 1', viewedDate);
   if (location.pathname === '/foodlog/yesterday') {
     viewedDate.setDate(viewedDate.getDate() - 1);
-  } else if (location.pathname === '/foodlog/past') {
-    viewedDate.setDate(viewedDate.getDate() - 3);
+  } else if (location.pathname === `/foodlog/past/${id}`) {
+    console.log('ID', id);
+    viewedDate.setDate(id.slice(8, 10));
+    viewedDate.setMonth(id.slice(5, 7) - 1);
+    viewedDate.setYear(id.slice(0, 4));
   } else if (location.pathname === '/foodlog/today') {
     viewedDate.setDate(new Date());
   }
   viewedDate = viewedDate.toJSON().slice(0, 10);
-  // console.log('viewedDate 2', viewedDate);
+  console.log('viewedDate 2', viewedDate);
 
   const userId = AUTH.getPayload().sub;
-  // console.log('USER ID', userId);
+  console.log('USER ID', userId);
   // console.log('USER DAY ID 1', userDayId);
 
   // useEffect(() => {
@@ -49,14 +52,14 @@ export default function FoodListDisplay() {
   //   }));
   // }, [viewedDate]);
 
-  useEffect(() => {
-    API.GET(API.ENDPOINTS.getAllColors)
-      .then(({ data }) => {
-        setColors(data);
-        console.log('COLORS DATA', data);
-      })
-      .catch(({ message, response }) => console.error(message, response));
-  }, []);
+  // useEffect(() => {
+  //   API.GET(API.ENDPOINTS.getAllColors)
+  //     .then(({ data }) => {
+  //       setColors(data);
+  //       console.log('COLORS DATA', data);
+  //     })
+  //     .catch(({ message, response }) => console.error(message, response));
+  // }, []);
 
   useEffect(() => {
     setUserDay((userDay) => ({
@@ -81,15 +84,16 @@ export default function FoodListDisplay() {
               setFoods(data.foods_consumed);
               console.log('FOOD LOG FROM SINGlE USERDAY', data.foods_consumed);
               setIsUpdated(false);
-              declareRainBowEaten();
+              checkIsRainBowEaten();
             })
             .catch(({ message, response }) => console.error(message, response));
         } else {
-          return;
+          setFoods(null);
+          setHasEatenRainbow(false);
         }
       })
       .catch(({ message, response }) => console.error(message, response));
-  }, [userDayId, viewedDate, userId, isUpdated]);
+  }, [userDayId, viewedDate, userId, isUpdated, id]);
 
   const handleSearchOnChange = (e, newValue) => {
     setUserDay((userDay) => ({
@@ -123,29 +127,39 @@ export default function FoodListDisplay() {
   const handleDelete = (e) => {
     console.log('value', e.target.value);
     console.info('You clicked the delete icon.');
-    // console.log('You clicked', value);
-    // console.log('Value', key);
   };
 
-  const declareRainBowEaten = () => {
-    console.log('DECLARERAINBOW FUNCTION IS RUNNING');
-    console.log('COLORS FROM INSIDE DCLETR', colors);
-    console.log('FOODs FROM INSIDE DCLETR', foods);
-    const isETRTrue = colors.every((i) =>
-      foods?.map((food) => food?.color?.id).includes(i.id)
-    );
-    console.log('ETR BOOL VAL', isETRTrue);
-    if (isETRTrue) {
-      console.log('declare rainbow');
-      setHasEatenRainbow(true);
-    }
+  const checkIsRainBowEaten = () => {
+    console.log('CHECK RAINBOW FUNCTION IS RUNNING');
+
+    API.GET(API.ENDPOINTS.getAllColors)
+      .then(({ data }) => {
+        setColors(data);
+        console.log('COLORS DATA', data);
+        console.log('COLORS FROM INSIDE DCLETR', colors);
+        console.log('FOODs FROM INSIDE DCLETR', foods);
+        const isETRTrue = colors?.every((i) =>
+          foods?.map((food) => food?.color?.id).includes(i.id)
+        );
+        console.log('ETR BOOL VAL', isETRTrue);
+        if (isETRTrue) {
+          console.log('declare rainbow');
+          return setHasEatenRainbow(true);
+        } else {
+          return setHasEatenRainbow(false);
+        }
+      })
+      .catch(({ message, response }) => console.error(message, response));
   };
-  if (foods === null) {
-    return <p>Loading</p>;
-  }
+
+  // if (foods === null) {
+  //   return <p>Loading</p>;
+  // }
   return (
     <>
+      <p> Log your food</p>
       <Search handleChange={handleSearchOnChange} />
+      {hasEatenRainbow && <p>YAY YOU'VE EATEN THE RAINBOW</p>}
       <p>food log for {viewedDate}</p>
       {hasUserDayEntry ? (
         <ul>
@@ -162,7 +176,6 @@ export default function FoodListDisplay() {
       ) : (
         <p>Nothing logged for this day</p>
       )}
-      {hasEatenRainbow && <p>YAY YOU'VE EATEN THE RAINBOW</p>}
     </>
   );
 }

@@ -1,11 +1,15 @@
 import Calendar from './common/Calendar';
 import FoodListDisplay from './common/FoodListDisplay';
 
+import Container from '@mui/material/Container';
+
 export default function PastFoodLog() {
   return (
     <>
-      <Calendar />
-      <FoodListDisplay />
+      <Container maxWidth='lg'>
+        <Calendar />
+        <FoodListDisplay />
+      </Container>
     </>
   );
 }
