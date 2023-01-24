@@ -5,7 +5,6 @@ import { AUTH } from '../lib/auth';
 
 import Search from './common/Search';
 import FoodListItem from './common/FoodListItem';
-import Calendar from './common/Calendar';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -70,18 +69,9 @@ export default function FoodLog() {
   }, [isUpdated]);
 
   const handleSearchOnChange = (e, newValue) => {
-    // const userIDFromSub = AUTH.getPayload().sub;
-    // console.log('userIDFromSub:', userIDFromSub);
-    // const date = new Date().toJSON().slice(0, 10);
-    // console.log('date:', date);
-    // console.log('event', newValue.id);
-
     setUserDay((userDay) => ({
       ...userDay,
-      // user: userIDFromSub,
-      // day_logged: date,
       foods_consumed: userDay.foods_consumed.push(newValue.id)
-      // foods_consumed: [5]
     }));
 
     console.log('USER DAY', userDay);
@@ -129,7 +119,6 @@ export default function FoodLog() {
     <>
       <CssBaseline />
       <Container maxWidth='lg'>
-        <Calendar />
         <Search handleChange={handleSearchOnChange} />
         <p>Today I ate:</p>
         <ul>

@@ -51,7 +51,7 @@ export default function Search({ handleChange }) {
                 setFilteredFoods([]);
               }
             }}
-            label='Search for food name or description'
+            label='Search for food name'
           />
         )}
       />

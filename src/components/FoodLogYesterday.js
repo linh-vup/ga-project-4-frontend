@@ -5,6 +5,14 @@ import FoodListItem from './common/FoodListItem';
 import FoodListItem2 from './common/FoodListItem2';
 import FoodListDisplay from './common/FoodListDisplay';
 
+import Container from '@mui/material/Container';
+
 export default function FoodLogYesterday() {
-  return <FoodListDisplay />;
+  return (
+    <>
+      <Container maxWidth='lg'>
+        <FoodListDisplay />
+      </Container>
+    </>
+  );
 }

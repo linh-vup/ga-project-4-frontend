@@ -18,7 +18,7 @@ const getHeaders = () => ({
   headers: { Authorization: `Bearer ${AUTH.getToken()}` }
 });
 
-const GET = (endpoint) => axios.get(endpoint);
+const GET = (endpoint, headers = null) => axios.get(endpoint, headers);
 const POST = (endpoint, body, headers) =>
   headers ? axios.post(endpoint, body, headers) : axios.post(endpoint, body);
 const PUT = (endpoint, body, headers) => axios.put(endpoint, body, headers);
