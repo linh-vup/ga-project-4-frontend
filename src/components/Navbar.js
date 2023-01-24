@@ -61,7 +61,7 @@ export default function Navbar() {
                   Food Log Yesterday
                 </Typography>
               </Link>
-              <Link to='/foodlog/past/:id'>
+              {/* <Link to='/foodlog/past/:id'>
                 <Typography
                   variant='h6'
                   color='inherit'
@@ -70,8 +70,8 @@ export default function Navbar() {
                 >
                   Food Log Past
                 </Typography>
-              </Link>
-              <Link to='/foodlog/stats'>
+              </Link> */}
+              <Link to='/stats'>
                 <Typography
                   variant='h6'
                   color='inherit'

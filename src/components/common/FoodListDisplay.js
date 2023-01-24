@@ -5,6 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import Search from './Search';
 import FoodListItem2 from './FoodListItem2';
+import ProgressBar from './ProgressBar';
 
 import '../../styles/items.scss';
 
@@ -16,51 +17,43 @@ export default function FoodListDisplay() {
   });
 
   const [userDayId, setUserDayId] = useState(null);
-  const [foods, setFoods] = useState(null);
-  const [colors, setColors] = useState(null);
+  const [foods, setFoods] = useState([]);
+  const [colors, setColors] = useState([]);
   const [hasUserDayEntry, setHasUserDayEntry] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const [hasEatenRainbow, setHasEatenRainbow] = useState(false);
+  const [redValue, setRedValue] = useState(0);
+  const [yellowValue, setYellowValue] = useState(0);
+  const [greenValue, setGreenValue] = useState(0);
   const location = useLocation();
   const { id } = useParams();
-  // console.log(location);
+
+  console.log({ foods, userDayId });
 
   let viewedDate = new Date();
-  console.log('viewedDate 1', viewedDate);
+
   if (location.pathname === '/foodlog/yesterday') {
     viewedDate.setDate(viewedDate.getDate() - 1);
   } else if (location.pathname === `/foodlog/past/${id}`) {
-    console.log('ID', id);
     viewedDate.setDate(id.slice(8, 10));
     viewedDate.setMonth(id.slice(5, 7) - 1);
     viewedDate.setYear(id.slice(0, 4));
   } else if (location.pathname === '/foodlog/today') {
     viewedDate = new Date();
-    console.log('TODAY PATH VIEWDATE', viewedDate);
   }
   viewedDate = viewedDate.toJSON().slice(0, 10);
-  console.log('viewedDate 2', viewedDate);
 
   const userId = AUTH.getPayload().sub;
-  console.log('USER ID', userId);
-  // console.log('USER DAY ID 1', userDayId);
 
-  // useEffect(() => {
-  //   setUserDay((userDay) => ({
-  //     ...userDay,
-  //     user: AUTH.getPayload().sub,
-  //     day_logged: viewedDate
-  //   }));
-  // }, [viewedDate]);
-
-  // useEffect(() => {
-  //   API.GET(API.ENDPOINTS.getAllColors)
-  //     .then(({ data }) => {
-  //       setColors(data);
-  //       console.log('COLORS DATA', data);
-  //     })
-  //     .catch(({ message, response }) => console.error(message, response));
-  // }, []);
+  useEffect(() => {
+    if (foods.length) {
+      API.GET(API.ENDPOINTS.getAllColors)
+        .then(({ data }) => {
+          setColors(data);
+        })
+        .catch(({ message, response }) => console.error(message, response));
+    }
+  }, [foods.length]);
 
   useEffect(() => {
     setUserDay((userDay) => ({
@@ -68,56 +61,61 @@ export default function FoodListDisplay() {
       user: AUTH.getPayload().sub,
       day_logged: viewedDate
     }));
+
     API.GET(API.ENDPOINTS.getAllUserDAys, API.getHeaders())
       .then(({ data }) => {
-        console.log('DATA FROM GET ALL USER DAYS', data);
         const userDay = data.find((day) => day.day_logged === viewedDate);
         if (userDay) {
-          console.log('FOUND USER DATA', userDay);
           setHasUserDayEntry(true);
           setUserDay(userDay);
-          console.log('USER DAY DATA FROM GETALLUSER DAY CALL', userDay);
           setUserDayId(userDay.id);
 
           API.GET(API.ENDPOINTS.singleUserDay(userDay.id), API.getHeaders())
             .then(({ data }) => {
-              console.log(data);
               setFoods(data.foods_consumed);
-              console.log('FOOD LOG FROM SINGlE USERDAY', data.foods_consumed);
               setIsUpdated(false);
-              checkIsRainBowEaten();
             })
             .catch(({ message, response }) => console.error(message, response));
         } else {
-          setFoods(null);
           setHasEatenRainbow(false);
+          setFoods([]);
+          setUserDayId(null);
         }
       })
       .catch(({ message, response }) => console.error(message, response));
-  }, [userDayId, viewedDate, userId, isUpdated]);
+  }, [userDayId, viewedDate, userId, isUpdated, id]);
 
   const handleSearchOnChange = (e, newValue) => {
-    setUserDay((userDay) => ({
-      ...userDay,
-      foods_consumed: userDay.foods_consumed.push(newValue.id)
-    }));
+    console.log({ newValue, userDay });
 
-    console.log('USER DAY', userDay);
-    console.log('ID IN ONCHANGE', userDayId);
     if (userDayId === null) {
-      API.POST(API.ENDPOINTS.createUserDay, userDay, API.getHeaders())
+      console.log('POSTING');
+      API.POST(
+        API.ENDPOINTS.createUserDay,
+        {
+          ...userDay,
+          // foods_consumed: [...userDay.foods_consumed, newValue.id]
+          foods_consumed: [newValue.id]
+        },
+        API.getHeaders()
+      )
         .then(({ data }) => {
           setUserDay(data);
-          console.log('USER DAY DATA TO CREATE', data);
-          console.log('USER DAY DATA TO CREATE', data.userDayId);
           setUserDayId(data.id);
         })
         .catch(({ message, response }) => console.error(message, response));
     } else {
-      API.PUT(API.ENDPOINTS.singleUserDay(userDayId), userDay, API.getHeaders())
+      console.log('UPDATING');
+      API.PUT(
+        API.ENDPOINTS.singleUserDay(userDayId),
+        {
+          ...userDay,
+          foods_consumed: [...userDay.foods_consumed, newValue.id]
+        },
+        API.getHeaders()
+      )
         .then(({ data }) => {
           setUserDay(data);
-          console.log('USER DAY DATA TO PUT', data);
           setFoods(data.foods_consumed);
           setIsUpdated(true);
         })
@@ -125,42 +123,46 @@ export default function FoodListDisplay() {
     }
   };
 
-  const handleDelete = (e) => {
-    console.log('value', e.target.value);
-    console.info('You clicked the delete icon.');
-  };
+  const handleDelete = (e) => {};
 
-  const checkIsRainBowEaten = () => {
-    console.log('CHECK RAINBOW FUNCTION IS RUNNING');
+  console.log({ foods });
 
-    API.GET(API.ENDPOINTS.getAllColors)
-      .then(({ data }) => {
-        setColors(data);
-        console.log('COLORS DATA', data);
-        console.log('COLORS FROM INSIDE DCLETR', colors);
-        console.log('FOODs FROM INSIDE DCLETR', foods);
-        const isETRTrue = colors?.every((i) =>
-          foods?.map((food) => food?.color?.id).includes(i.id)
-        );
-        console.log('ETR BOOL VAL', isETRTrue);
-        if (isETRTrue) {
-          console.log('declare rainbow');
-          return setHasEatenRainbow(true);
-        } else {
-          return setHasEatenRainbow(false);
-        }
-      })
-      .catch(({ message, response }) => console.error(message, response));
-  };
+  const userHasCompletedRainbow =
+    foods.reduce((acc, curr) => {
+      if (!acc.includes(curr.color.id)) {
+        acc.push(curr.color.id);
+      }
+      return acc;
+    }, []).length === colors.length;
+
+  const progression = foods.reduce((acc, curr) => {
+    if (!acc.includes(curr.color.slug)) {
+      acc.push(curr.color.slug);
+    }
+    return acc;
+  }, []);
+
+  console.log(progression);
+
+  // if (userHasCompletedRainbow) {
+  //   setHasEatenRainbow(true);
+  // }
+
+  console.log({ userHasCompletedRainbow });
 
   // if (foods === null) {
-  //   return <p>Loading</p>;
+  //   return (
+  //     <p class='placeholder-wave'>
+  //       <span class='placeholder col-12'></span>
+  //     </p>
+  //   );
   // }
   return (
     <>
+      <ProgressBar redValue={20} yellowValue={20} greenValue={20} />
       <p> Log your food</p>
       <Search handleChange={handleSearchOnChange} />
-      {hasEatenRainbow && <p>YAY YOU'VE EATEN THE RAINBOW</p>}
+      {userHasCompletedRainbow && <p>YAY YOU'VE EATEN THE RAINBOW</p>}
       <p>food log for {viewedDate}</p>
       {hasUserDayEntry ? (
         <ul>

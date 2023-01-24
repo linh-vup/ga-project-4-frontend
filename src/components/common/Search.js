@@ -17,7 +17,6 @@ export default function Search({ handleChange }) {
   useEffect(() => {
     API.GET(API.ENDPOINTS.getAllFoods)
       .then(({ data }) => {
-        console.log('FOODS DATA', data);
         setFoods(data);
       })
       .catch(({ message, response }) => console.error(message, response));
@@ -44,7 +43,6 @@ export default function Search({ handleChange }) {
           <TextField
             {...params}
             onChange={(e) => {
-              console.log('User is Typing', e.target.value);
               if (e.target.value !== '') {
                 setQuery(e.target.value);
               } else {

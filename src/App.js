@@ -10,6 +10,8 @@ import FoodLogYesterday from './components/FoodLogYesterday';
 import PastFoodLog from './components/PastFoodLog';
 import Stats from './components/Stats';
 
+import './styles/App.scss';
+
 window.Buffer = window.Buffer || require('buffer').Buffer;
 
 function App() {

@@ -12,7 +12,6 @@ export default function Colors() {
     API.GET(API.ENDPOINTS.getAllColors)
       .then(({ data }) => {
         setColors(data);
-        console.log('COLORS DATA', data);
       })
       .catch(({ message, response }) => console.error(message, response));
   }, []);

@@ -45,7 +45,6 @@ export default function Register() {
         ...formFields,
         profile_image: cloudinaryResponse.data.public_id
       };
-      console.log('REQ BODY', apiReqBody);
 
       await API.POST(API.ENDPOINTS.register, apiReqBody);
 

@@ -13,30 +13,20 @@ export default function StaticDatePickerLandscape() {
   const { id } = useParams();
   const [date, setDate] = useState(dayjs(id));
   const navigate = useNavigate();
-  const dateFormatted = new Date().toJSON().slice(0, 10);
+
 
   return (
     <>
-      {/* <Box
-        sx={{
-          width: 500,
-          height: 300
-        }}
-      > */}
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <CalendarPicker
           date={date}
           onChange={(newDate) => {
             setDate(newDate);
-            console.log('NEW DATE ON CHANGE', newDate.toJSON());
             const navTo = newDate.toJSON().slice(0, 10);
             navigate(`/foodlog/past/${navTo}`);
-            console.log(new Date().toJSON());
           }}
         />
       </LocalizationProvider>
-      {/* </Box> */}
-      {/* <p>Date Today: {date}</p> */}
     </>
   );
 }
