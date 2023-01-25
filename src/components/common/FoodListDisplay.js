@@ -3,7 +3,7 @@ import { API } from '../../lib/api';
 import { AUTH } from '../../lib/auth';
 import { useLocation, useParams } from 'react-router-dom';
 
-import Grid from '@mui/material/Grid';
+import { Container, Grid } from '@mui/material';
 import Search from './Search';
 import FoodListItem from './FoodListItem';
 import ProgressBar from './ProgressBar';
@@ -161,13 +161,13 @@ export default function FoodListDisplay() {
   return (
     <>
       <Grid container spacing={2}>
+        <ProgressBar
+          allColors={allColorSlugs}
+          consumedColors={consumedColorSlugs}
+        />
         <Grid item xs={12}>
-          <ProgressBar
-            allColors={allColorSlugs}
-            consumedColors={consumedColorSlugs}
-          />
           {userHasCompletedRainbow ? (
-            <h1>Yay, you've eaten the rainbow!</h1>
+            <h1>Yay, you've eaten the rainbow</h1>
           ) : (
             <h1>Keep on going!</h1>
           )}
@@ -175,24 +175,31 @@ export default function FoodListDisplay() {
           <p>
             Your food log for {moment(viewedDate, 'YYYY-MM-DD').format('dddd')}
           </p>
-          <Search handleChange={handleSearchOnChange} />
         </Grid>
-        <Grid item xs={5}>
-          {hasUserDayEntry ? (
-            <ul id='food-list-items'>
-              {foods?.map((food) => (
-                <FoodListItem
-                  foodItem={food?.name}
-                  onClick={handleDelete}
-                  className={`${food?.color?.slug} list-item`}
-                  key={food?.id}
-                  value={food?.id}
-                />
-              ))}
-            </ul>
-          ) : (
-            <p>Nothing logged for this day</p>
-          )}
+        <Grid
+          container
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+        >
+          <Grid item xs={12} sm={12} md={6}>
+            {hasUserDayEntry ? (
+              <ul id='food-list-items'>
+                {foods?.map((food) => (
+                  <FoodListItem
+                    foodItem={food?.name}
+                    onClick={handleDelete}
+                    className={`${food?.color?.slug} list-item`}
+                    key={food?.id}
+                    value={food?.id}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <p>Nothing logged for this day</p>
+            )}
+          </Grid>
+          <Grid item xs={10} sm={10} md={5}>
+            <Search handleChange={handleSearchOnChange} />
+          </Grid>
         </Grid>
       </Grid>
     </>

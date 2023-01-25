@@ -3,9 +3,12 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../../lib/api';
+
+import '../../styles/SearchBar.scss';
 
 export default function Search({ handleChange }) {
   const [foods, setFoods] = useState([]);

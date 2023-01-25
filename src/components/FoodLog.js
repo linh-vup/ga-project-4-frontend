@@ -6,7 +6,7 @@ export default function FoodLog() {
   return (
     <>
       <>
-        <Container maxWidth='lg'>
+        <Container maxWidth='lg' sx={{ display: 'flex' }}>
           <FoodListDisplay />
         </Container>
       </>

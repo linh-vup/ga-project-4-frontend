@@ -1,20 +1,59 @@
 // @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
 
-$red-bg-color: #720E00 !default;
+$red-bg-color: #720e00 !default;
 $orange-yellow-bg-color: #dca219aa !default;
-$green-bg-color: #8bd635ea!default;
-$blue-purple-bg-color: #002045!default;
-$brown-white-bg-color: #96938e!default;
+$green-bg-color: #8bd635ea !default;
+$blue-purple-bg-color: #002045 !default;
+$brown-white-bg-color: #96938e !default;
 
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #2e2633;
+  color: white;
+  font-size: 24px;
+  padding-bottom: 64px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
 .custom-class {
   margin-top: 20px;
   margin: 30px;
 }
 
-body {
-  background-color: #2E2633;
-  color: white;
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0; /* 2 */
+  padding: 6px;
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  font-family: inherit;
+  border-radius: 16px;
+  box-shadow: none;
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+a.button {
   font-size: 24px;
-  padding-bottom: 64px;
+  padding: 12px 16px;
+  border: 2px solid none;
+  border-radius: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: #E6EA23;
+  color: black;
+  font-family: 'Work Sans', sans-serif;
+  margin-right: 2px;
 }

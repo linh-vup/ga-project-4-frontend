@@ -19,39 +19,86 @@
   align-items: center;
 
   &.red {
-    border-color: #F71515;
-    background-color: #720E00;
+    border-color: #f71515;
+    background-color: #720e00;
     .image-background {
-      background-color: #F71515;
+      background-color: #f71515;
+      position: relative;
+    }
+    .image {
+      background-image: url('../images/strawberry.png');
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 60px;
+      height: 60px;
+      left: -5px;
+      top: -5px;
     }
   }
   &.orange-yellow {
     border-color: #eab223;
     background-color: #dca219aa;
     .image-background {
-      background-color: #E6EA23;
+      background-color: #e6ea23;
+      position: relative;
+    }
+    .image {
+      background-image: url('../images/lemon.png');
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 60px;
+      height: 60px;
+      left: -5px;
+      top: -5px;
     }
   }
   &.green {
-    border-color: #A0B607;
+    border-color: #a0b607;
     background-color: #8bd635ea;
     .image-background {
-      background-color: #A0B607;
+      background-color: #a0b607;
+      position: relative;
+    }
+    .image {
       background-image: url('../images/avocado.png');
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 60px;
+      height: 60px;
+      left: -5px;
+      top: -5px;
     }
   }
   &.blue-purple {
-    border-color: #1F7BE8;
+    border-color: #1f7be8;
     background-color: #002045;
     .image-background {
-      background-color: #1F7BE8;
+      background-color: #1f7be8;
+      position: relative;
+    }
+    .image {
+      background-image: url('../images/blueberries.png');
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 60px;
+      height: 60px;
+      left: -5px;
+      top: -5px;
     }
   }
   &.brown-white {
-    border-color: #E97F02;
-    background-color:#96938e;
+    border-color: #e97f02;
+    background-color: #96938e;
     .image-background {
-      background-color: #E97F02;
+      background-color: #e97f02;
+      position: relative;
+    }
+    .image {
+      background-image: url('../images/coconut.png');
     }
   }
 
@@ -59,6 +106,16 @@
     width: 50px;
     height: 50px;
     border-radius: 25px;
+  }
+
+  .image {
+      position: absolute;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 60px;
+      height: 60px;
+      left: -5px;
+      top: -5px;
   }
 
   .label {
