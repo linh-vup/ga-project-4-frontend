@@ -6,6 +6,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CalendarPicker } from '@mui/x-date-pickers/CalendarPicker';
 
+import '../../styles/Calendar.scss';
+
 export default function StaticDatePickerLandscape() {
   // const [value, setValue] = useState(dayjs('2022-04-07'));
 
@@ -20,6 +22,7 @@ export default function StaticDatePickerLandscape() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <CalendarPicker
           date={date}
+          disableFuture={true}
           onChange={(newDate) => {
             setDate(newDate);
             const navTo = newDate.toJSON().slice(0, 10);

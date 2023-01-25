@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
+
+.css-dplwbx-MuiPickersCalendarHeader-label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 18px;
+
+}
+
+.css-raiqh1-MuiTypography-root-MuiDayPicker-weekDayLabel {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
+  color: #FFFFFF
+}
+
+.css-bkrceb-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-image: -webkit-linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  color: transparent;
+}
+// .MuiCalendarPicker-viewTransitionContainer {
+// }
+

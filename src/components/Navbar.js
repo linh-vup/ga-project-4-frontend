@@ -22,10 +22,6 @@ export default function Navbar() {
         <NavLink activeClassName='active' to='/'>
           Home
         </NavLink>
-
-        <NavLink activeClassName='active' to='/colors'>
-          Colors
-        </NavLink>
         {isLoggedIn ? (
           <>
             <NavLink activeClassName='active' to='/foodlog/today'>

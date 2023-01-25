@@ -26,17 +26,18 @@
     }
   }
   &.orange-yellow {
-    border-color: #E6EA23;
-    background-color: #343500;
+    border-color: #eab223;
+    background-color: #dca219aa;
     .image-background {
       background-color: #E6EA23;
     }
   }
   &.green {
     border-color: #A0B607;
-    background-color: #303600;
+    background-color: #8bd635ea;
     .image-background {
       background-color: #A0B607;
+      background-image: url('../images/avocado.png');
     }
   }
   &.blue-purple {
@@ -48,7 +49,7 @@
   }
   &.brown-white {
     border-color: #E97F02;
-    background-color:#4F2B00;
+    background-color:#96938e;
     .image-background {
       background-color: #E97F02;
     }
