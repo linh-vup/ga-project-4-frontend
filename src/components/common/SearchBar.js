@@ -2,11 +2,11 @@ import '../../styles/SearchBar.scss';
 
 export default function SearchBar() {
   return (
-    <div class='dropdown'>
-      <button onclick='myFunction()' className='dropbtn'>
+    <div className='dropdown'>
+      <button onclick='myFunction()' NameName='dropbtn'>
         Dropdown
       </button>
-      <div id='myDropdown' class='dropdown-content'>
+      <div id='myDropdown' className='dropdown-content'>
         <input
           type='text'
           placeholder='Search..'

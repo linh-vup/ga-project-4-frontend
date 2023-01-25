@@ -27,9 +27,7 @@ export default function FoodListDisplay() {
   const [hasEatenRainbow, setHasEatenRainbow] = useState(false);
   const location = useLocation();
   const { id } = useParams();
-
-  console.log({ foods, userDayId });
-
+  const userId = AUTH.getPayload().sub;
   let viewedDate = new Date();
 
   if (location.pathname === '/foodlog/today') {
@@ -42,8 +40,6 @@ export default function FoodListDisplay() {
     viewedDate.setYear(id.slice(0, 4));
   }
   viewedDate = viewedDate.toJSON().slice(0, 10);
-
-  const userId = AUTH.getPayload().sub;
 
   useEffect(() => {
     if (foods.length) {
@@ -68,14 +64,18 @@ export default function FoodListDisplay() {
         if (userDay) {
           setHasUserDayEntry(true);
           setUserDay(userDay);
+          setFoods(userDay.foods_consumed);
+          console.log('DATA RETURNED FROM GETALLUSERDAY CALL', data);
+          console.log('USER DAY foods consumed', userDay.foods_consumed);
           setUserDayId(userDay.id);
+          setIsUpdated(false);
 
-          API.GET(API.ENDPOINTS.singleUserDay(userDay.id), API.getHeaders())
-            .then(({ data }) => {
-              setFoods(data.foods_consumed);
-              setIsUpdated(false);
-            })
-            .catch(({ message, response }) => console.error(message, response));
+          // API.GET(API.ENDPOINTS.singleUserDay(userDay.id), API.getHeaders())
+          //   .then(({ data }) => {
+          //     setFoods(data.foods_consumed);
+          //     console.log('SET FOODS', data.foods_consumed);
+          //   })
+          //   .catch(({ message, response }) => console.error(message, response));
         } else {
           setHasEatenRainbow(false);
           setFoods([]);
@@ -86,7 +86,7 @@ export default function FoodListDisplay() {
   }, [userDayId, viewedDate, userId, isUpdated, id]);
 
   const handleSearchOnChange = (e, newValue) => {
-    console.log({ newValue, userDay });
+    console.log('HANDLE SEARCH', { newValue, userDay });
 
     if (userDayId === null) {
       console.log('POSTING');
@@ -104,12 +104,12 @@ export default function FoodListDisplay() {
         })
         .catch(({ message, response }) => console.error(message, response));
     } else {
-      console.log('UPDATING');
+      const foodsConsumedIds = userDay.foods_consumed.map((food) => food.id);
       API.PUT(
         API.ENDPOINTS.singleUserDay(userDayId),
         {
           ...userDay,
-          foods_consumed: [...userDay.foods_consumed, newValue.id]
+          foods_consumed: [...foodsConsumedIds, newValue.id]
         },
         API.getHeaders()
       )
@@ -124,14 +124,16 @@ export default function FoodListDisplay() {
 
   const handleDelete = (e) => {
     const listItemId = parseInt(e.target.dataset.foodItemId);
-    const foodObjectIndexToRemove = userDay?.foods_consumed.findIndex(
-      (food) => food === listItemId
+    const foodsConsumedIds = userDay.foods_consumed.map((food) => food.id);
+
+    const foodObjectIndexToRemove = foodsConsumedIds.findIndex(
+      (foodId) => foodId === listItemId
     );
     if (foodObjectIndexToRemove === -1) {
       console.log('returned index -1');
       return;
     }
-    const foodArrayToUpdate = [...userDay.foods_consumed];
+    const foodArrayToUpdate = [...foodsConsumedIds];
     foodArrayToUpdate.splice(foodObjectIndexToRemove, 1);
 
     API.PUT(
