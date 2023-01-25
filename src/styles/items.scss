@@ -1,28 +1,72 @@
+#food-list-items {
+  margin: 0;
+  padding: 0;
+}
+
 .list-item {
   border-style: solid;
+  border-width: 2px;
   margin-bottom: 12px;
-  border-radius: 12px;
-  padding: 12px;
-}
+  border-radius: 44px;
+  height: 88px;
+  padding: 0 18px;
+  display: block;
+  list-style: none;
+  margin-left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
+  &.red {
+    border-color: #F71515;
+    background-color: #720E00;
+    .image-background {
+      background-color: #F71515;
+    }
+  }
+  &.orange-yellow {
+    border-color: #E6EA23;
+    background-color: #343500;
+    .image-background {
+      background-color: #E6EA23;
+    }
+  }
+  &.green {
+    border-color: #A0B607;
+    background-color: #303600;
+    .image-background {
+      background-color: #A0B607;
+    }
+  }
+  &.blue-purple {
+    border-color: #1F7BE8;
+    background-color: #002045;
+    .image-background {
+      background-color: #1F7BE8;
+    }
+  }
+  &.brown-white {
+    border-color: #E97F02;
+    background-color:#4F2B00;
+    .image-background {
+      background-color: #E97F02;
+    }
+  }
 
-.red {
-  border-color: rgb(242, 106, 102);
-  background-color: rgb(242, 106, 102, 0.5);
-}
-.orange-yellow {
-  border-color: rgb(226, 226, 8);
-  background-color:rgb(226, 226, 8, 0.5);
-}
-.green {
-  border-color: rgb(33, 151, 37);
-  background-color:rgb(33, 151, 37, 0.5);
-}
-.blue-purple {
-  border-color: rgb(128, 128, 255);
-  background-color: rgb(128, 128, 255, 0.5);
-}
-.brown-white {
-  border-color: rgb(233, 233, 190);
-  background-color: rgb(233, 233, 190, 0.5);
+  .image-background {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+  }
+
+  .label {
+    margin-left: 20px;
+    font-weight: 600;
+  }
+
+  .remove-button {
+    margin-left: auto;
+    cursor: pointer;
+  }
 }

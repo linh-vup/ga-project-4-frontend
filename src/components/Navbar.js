@@ -1,12 +1,14 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, NavLink, Link, useParams } from 'react-router-dom';
 import { useAuthenticated } from '../hook/useAuthenticated';
 import { AUTH } from '../lib/auth';
+import Container from '@mui/material/Container';
+
+import '../styles/navbar.scss';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useAuthenticated();
-  const { id } = useParams();
 
   const logout = () => {
     AUTH.logout();
@@ -15,109 +17,41 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ flexgrow: 1 }}>
-      <AppBar position='static'>
-        <Toolbar variant='dense' className='Navbar'>
-          <Link to='/'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Home
-            </Typography>
-          </Link>
+    <div id='nav-bar-wrapper'>
+      <Container maxWidth='lg' id='nav-bar'>
+        <NavLink activeClassName='active' to='/'>
+          Home
+        </NavLink>
 
-          <Link to='/colors'>
-            <Typography
-              variant='h6'
-              color='inherit'
-              component='div'
-              sx={{ mr: 2, color: 'black' }}
-            >
-              Colors
-            </Typography>
-          </Link>
-          {isLoggedIn ? (
-            <>
-              <Link to='/foodlog/today'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Food Log Today
-                </Typography>
-              </Link>
-              <Link to='/foodlog/yesterday'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Food Log Yesterday
-                </Typography>
-              </Link>
-              {/* <Link to='/foodlog/past/:id'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Food Log Past
-                </Typography>
-              </Link> */}
-              <Link to='/stats'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Stats
-                </Typography>
-              </Link>
-              <Link to='/' onClick={logout}>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Logout
-                </Typography>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to='/login'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Login
-                </Typography>
-              </Link>
-              <Link to='/register'>
-                <Typography
-                  variant='h6'
-                  color='inherit'
-                  component='div'
-                  sx={{ mr: 2, color: 'black' }}
-                >
-                  Register
-                </Typography>
-              </Link>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+        <NavLink activeClassName='active' to='/colors'>
+          Colors
+        </NavLink>
+        {isLoggedIn ? (
+          <>
+            <NavLink activeClassName='active' to='/foodlog/today'>
+              Today
+            </NavLink>
+            <NavLink activeClassName='active' to='/foodlog/yesterday'>
+              Yesterday
+            </NavLink>
+            <NavLink activeClassName='active' to='/stats'>
+              Stats
+            </NavLink>
+            <Link to='/' onClick={logout} className='right'>
+              Logout
+            </Link>
+          </>
+        ) : (
+          <>
+            <NavLink activeClassName='active' to='/login' className='right'>
+              Login
+            </NavLink>
+            <NavLink activeClassName='active' to='/register' className='right'>
+              Register
+            </NavLink>
+          </>
+        )}
+      </Container>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ const ENDPOINTS = {
   getAllColors: '/api/colors/',
   getSingleColor: (id) => `/api/colors/${id}/`,
   createUserDay: '/api/userdays/',
-  getAllUserDAys: '/api/userdays/',
+  getAllUserDays: '/api/userdays/',
   singleUserDay: (id) => `/api/userdays/${id}/`,
   search: (query) => `/api/foods/search/?search=${query}`,
   cloudinary: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`

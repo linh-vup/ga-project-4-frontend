@@ -1,26 +1,22 @@
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import '../../styles/Test.scss';
+import '../../styles/progress-bar.scss';
 
-function StackedExample({ redValue, yellowValue, greenValue }) {
+function ProgressBarComponent({ allColors, consumedColors }) {
+  if (!allColors || !consumedColors) return;
+
+  const width = Math.floor(100 / allColors.length) + '%';
   return (
-    <ProgressBar bsClass='custom-class'>
-      <ProgressBar striped animated variant='danger' now={redValue} key={1} />
-      <ProgressBar
-        striped
-        animated
-        variant='warning'
-        now={yellowValue}
-        key={2}
-      />
-      <ProgressBar
-        striped
-        animated
-        variant='success'
-        now={greenValue}
-        key={3}
-      />
-    </ProgressBar>
+    <div id='consumed-colors-progress'>
+      {allColors.map((color) => {
+        if (consumedColors.includes(color)) {
+          return (
+            <div width={width} className={color + ' active'} key={color.id} />
+          );
+        } else {
+          return <div width={width} className={color} key={color.id} />;
+        }
+      })}
+    </div>
   );
 }
 
-export default StackedExample;
+export default ProgressBarComponent;
