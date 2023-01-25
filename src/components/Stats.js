@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { API } from '../lib/api';
 import { AUTH } from '../lib/auth';
+import { Container } from '@mui/system';
+
+import FoodListItem from './common/FoodListItem';
 
 export default function Stats() {
   const [allUserDays, setAllUserDays] = useState([]);
-  const [allFoods, setAllFoods] = useState([]);
+  const [allFoods, setAllFoods] = useState(null);
   const [dateRange, setDateRange] = useState();
   const userId = AUTH.getPayload().sub;
 
@@ -34,16 +37,62 @@ export default function Stats() {
   useEffect(() => {
     API.GET(API.ENDPOINTS.getAllUserDays, API.getHeaders())
       .then(({ data }) => {
-        console.log('DATE FROM GET ALL USER DAYS', data);
+        console.log('DATA FROM GET ALL USER DAYS', data);
         setAllUserDays(data);
-        setAllFoods(data.foods_consumed);
+
+        const foodsConsumedInAllUserDays = data.map((userday) => {
+          return userday.foods_consumed.map((food) => food);
+        });
+        console.log({ foods: foodsConsumedInAllUserDays });
+
+        const nestedFoods = [];
+        for (let i = 0; i < foodsConsumedInAllUserDays.length; i++) {
+          for (var j = 0; j < foodsConsumedInAllUserDays[i].length; j++) {
+            nestedFoods.push(foodsConsumedInAllUserDays[i][j]);
+          }
+        }
+        console.log('NESTED FOODS', nestedFoods);
+        setAllFoods(nestedFoods);
+        console.log('ALL FOODS FROM CALL ', nestedFoods);
       })
       .catch(({ message, response }) => console.error(message, response));
   }, []);
 
+  const individualFoods = allFoods?.reduce((accumulator, current) => {
+    if (!accumulator.find((item) => item.id === current.id)) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+
+  console.log('INDI FOOD', individualFoods);
+
+  const numberOfTimesFoodsEaten = allFoods?.reduce(
+    (acc, value) => ({
+      ...acc,
+      [value.name]: (acc[value.name] || 0) + 1
+    }),
+    {}
+  );
+
+  console.log({ numberOfTimesFoodsEaten });
+
   return (
     <>
-      <p>Stats page</p>
+      <Container maxWidth='lg'>
+        <p>All The Food's You've Logged</p>
+        {individualFoods?.map((food) => (
+          <FoodListItem
+            foodItem={food?.name}
+            className={`${food?.color?.slug} list-item`}
+            key={food?.id}
+            value={food?.id}
+            extraInfo={
+              Object.keys(numberOfTimesFoodsEaten === food.name) && <p>Hello</p>
+            }
+          />
+        ))}
+      </Container>
     </>
   );
 }

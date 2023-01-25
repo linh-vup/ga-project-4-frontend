@@ -1,12 +1,19 @@
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-export default function FoodListItem({ foodItem, onClick, value, className }) {
+export default function FoodListItem({
+  foodItem,
+  onClick,
+  value,
+  className,
+  extraInfo
+}) {
   return (
     <li className={className} value={value}>
       <div className='image-background'>
         <div className='image' />
       </div>
       <span className='label'>{foodItem}</span>
+      <span className='label-extra-info'>{extraInfo}</span>
       <div className='remove-button'>
         <HighlightOffIcon
           sx={{ fontSize: 40 }}

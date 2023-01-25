@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { API } from '../../lib/api';
 import { AUTH } from '../../lib/auth';
 import { useLocation, useParams } from 'react-router-dom';
-
 import { Container, Grid } from '@mui/material';
+import { Typography } from '@mui/material';
+import moment from 'moment';
+
 import Search from './Search';
 import FoodListItem from './FoodListItem';
 import ProgressBar from './ProgressBar';
-import moment from 'moment';
+import Calendar from './Calendar';
 
 import '../../styles/items.scss';
-import { Typography } from '@mui/material';
 
 export default function FoodListDisplay() {
   const [userDay, setUserDay] = useState({
@@ -69,13 +70,6 @@ export default function FoodListDisplay() {
           console.log('USER DAY foods consumed', userDay.foods_consumed);
           setUserDayId(userDay.id);
           setIsUpdated(false);
-
-          // API.GET(API.ENDPOINTS.singleUserDay(userDay.id), API.getHeaders())
-          //   .then(({ data }) => {
-          //     setFoods(data.foods_consumed);
-          //     console.log('SET FOODS', data.foods_consumed);
-          //   })
-          //   .catch(({ message, response }) => console.error(message, response));
         } else {
           setHasEatenRainbow(false);
           setFoods([]);
@@ -201,6 +195,12 @@ export default function FoodListDisplay() {
           </Grid>
           <Grid item xs={10} sm={10} md={5}>
             <Search handleChange={handleSearchOnChange} />
+            {location.pathname === '/foodlog/yesterday' && (
+              <>
+                <h5>Check another day</h5>
+                <Calendar />
+              </>
+            )}
           </Grid>
         </Grid>
       </Grid>
