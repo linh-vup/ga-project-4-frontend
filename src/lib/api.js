@@ -6,7 +6,7 @@ const ENDPOINTS = {
   register: `${process.env.REACT_APP_BASE_URL}/api/auth/register/`,
   getAllFoods: `${process.env.REACT_APP_BASE_URL}/api/foods/`,
   getAllColors: `${process.env.REACT_APP_BASE_URL}/api/colors/`,
-  getSingleColor: (id) => `/api/colors/${id}/`,
+  getSingleColor: (id) => `${process.env.REACT_APP_BASE_URL}/api/colors/${id}/`,
   createUserDay: `${process.env.REACT_APP_BASE_URL}/api/userdays/`,
   getAllUserDays: `${process.env.REACT_APP_BASE_URL}/api/userdays/`,
   singleUserDay: (id) =>
