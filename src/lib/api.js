@@ -2,15 +2,17 @@ import axios from 'axios';
 import { AUTH } from './auth';
 
 const ENDPOINTS = {
-  login: '/api/auth/login/',
-  register: '/api/auth/register/',
-  getAllFoods: '/api/foods/',
-  getAllColors: '/api/colors/',
+  login: `${process.env.REACT_APP_BASE_URL}/api/auth/login/`,
+  register: `${process.env.REACT_APP_BASE_URL}/api/auth/register/`,
+  getAllFoods: `${process.env.REACT_APP_BASE_URL}/api/foods/`,
+  getAllColors: `${process.env.REACT_APP_BASE_URL}/api/colors/`,
   getSingleColor: (id) => `/api/colors/${id}/`,
-  createUserDay: '/api/userdays/',
-  getAllUserDays: '/api/userdays/',
-  singleUserDay: (id) => `/api/userdays/${id}/`,
-  search: (query) => `/api/foods/search/?search=${query}`,
+  createUserDay: `${process.env.REACT_APP_BASE_URL}/api/userdays/`,
+  getAllUserDays: `${process.env.REACT_APP_BASE_URL}/api/userdays/`,
+  singleUserDay: (id) =>
+    `${process.env.REACT_APP_BASE_URL}/api/userdays/${id}/`,
+  search: (query) =>
+    `${process.env.REACT_APP_BASE_URL}/api/foods/search/?search=${query}`,
   cloudinary: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`
 };
 
