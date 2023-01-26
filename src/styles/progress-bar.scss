@@ -1,3 +1,5 @@
+@use 'colors';
+
 #consumed-colors-progress {
   width: 100%;
   height: 32px;
@@ -24,33 +26,33 @@
   }
 
   .red {
-    border-color: #F71515;
+    border-color: colors.$red;
     &.active {
-      background-color: #F71515;
+      background-color: colors.$red;
     }
   }
   .orange-yellow {
-      border-color: #E6EA23;
+      border-color: colors.$orange-yellow;
     &.active {
-    background-color: #E6EA23;
+    background-color: colors.$orange-yellow;
     }
   }
   .green {
-      border-color: #A0B607;
+      border-color: colors.$green;
     &.active {
-    background-color: #A0B607;
+    background-color: colors.$green;
     }
   }
   .blue-purple {
-      border-color: #1F7BE8;
+      border-color: colors.$blue-purple;
     &.active {
-    background-color: #1F7BE8;
+    background-color: colors.$blue-purple;
     }
   }
   .brown-white {
-      border-color: #E97F02;
+      border-color: colors.$brown-white;
     &.active {
-    background-color:#E97F02;
+    background-color:colors.$brown-white;
     }
   }
 }

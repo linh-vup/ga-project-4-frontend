@@ -1,26 +1,45 @@
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 
 export default function FoodListItem({
-  foodItem,
-  onClick,
-  value,
+  name,
+  foodId,
   className,
-  extraInfo
+  extraInfo,
+  showDelete,
+  onDeleteClicked,
+  showAdd,
+  onAddClicked
 }) {
   return (
-    <li className={className} value={value}>
+    <li className={className} value={foodId}>
       <div className='image-background'>
         <div className='image' />
       </div>
-      <span className='label'>{foodItem}</span>
+      <span className='label'>{name}</span>
       <span className='label-extra-info'>{extraInfo}</span>
-      <div className='remove-button'>
-        <HighlightOffIcon
-          sx={{ fontSize: 40 }}
-          onClick={onClick}
-          data-food-item-id={value}
-        />
-      </div>
+      {showDelete ? (
+        <div className='delete-button'>
+          <HighlightOffIcon
+            sx={{ fontSize: 40 }}
+            onClick={onDeleteClicked}
+            data-food-item-id={foodId}
+          />
+        </div>
+      ) : (
+        ''
+      )}
+      {showAdd ? (
+        <div className='add-button'>
+          <AddCircleOutline
+            sx={{ fontSize: 40 }}
+            onClick={onAddClicked}
+            data-food-item-id={foodId}
+          />
+        </div>
+      ) : (
+        ''
+      )}
     </li>
   );
 }

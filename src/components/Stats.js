@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API } from '../lib/api';
 import { AUTH } from '../lib/auth';
-import { Container } from '@mui/system';
+import { Container, Grid } from '@mui/material';
 
 import FoodListItem from './common/FoodListItem';
 
@@ -58,40 +58,39 @@ export default function Stats() {
       .catch(({ message, response }) => console.error(message, response));
   }, []);
 
-  const individualFoods = allFoods?.reduce((accumulator, current) => {
-    if (!accumulator.find((item) => item.id === current.id)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-
-  console.log('INDI FOOD', individualFoods);
-
-  const numberOfTimesFoodsEaten = allFoods?.reduce(
-    (acc, value) => ({
-      ...acc,
-      [value.name]: (acc[value.name] || 0) + 1
-    }),
-    {}
-  );
-
-  console.log({ numberOfTimesFoodsEaten });
+  const distinctFoods = Array.from(new Set(allFoods?.map((food) => food.id)));
+  distinctFoods.sort((foodId1, foodId2) => {
+    return (
+      allFoods.filter((food) => food.id === foodId2).length -
+      allFoods.filter((food) => food.id === foodId1).length
+    );
+  });
 
   return (
     <>
       <Container maxWidth='lg'>
-        <p>All The Food's You've Logged</p>
-        {individualFoods?.map((food) => (
-          <FoodListItem
-            foodItem={food?.name}
-            className={`${food?.color?.slug} list-item`}
-            key={food?.id}
-            value={food?.id}
-            extraInfo={
-              Object.keys(numberOfTimesFoodsEaten === food.name) && <p>Hello</p>
-            }
-          />
-        ))}
+        <Grid container>
+          <Grid item md={8}>
+            <h1>All the food you've logged</h1>
+            {distinctFoods?.map((foodId) => {
+              const foodsWithId = allFoods.filter((food) => food.id === foodId);
+              const food = foodsWithId[0];
+              return (
+                <FoodListItem
+                  name={food?.name}
+                  className={`${food?.color?.slug} list-item`}
+                  key={food?.id}
+                  foodId={food?.id}
+                  extraInfo={
+                    <p>
+                      Eaten <strong>{foodsWithId.length}</strong> times
+                    </p>
+                  }
+                />
+              );
+            })}
+          </Grid>
+        </Grid>
       </Container>
     </>
   );

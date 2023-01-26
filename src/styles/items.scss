@@ -1,3 +1,5 @@
+@use 'colors';
+
 #food-list-items {
   margin: 0;
   padding: 0;
@@ -19,10 +21,10 @@
   align-items: center;
 
   &.red {
-    border-color: #f71515;
-    background-color: #720e00;
+    border-color: colors.$red;
+    background-color: colors.$red-background;
     .image-background {
-      background-color: #f71515;
+      background-color: colors.$red;
       position: relative;
     }
     .image {
@@ -37,10 +39,10 @@
     }
   }
   &.orange-yellow {
-    border-color: #eab223;
-    background-color: #dca219aa;
+    border-color: colors.$orange-yellow;
+    background-color: colors.$orange-yellow-background;
     .image-background {
-      background-color: #e6ea23;
+      background-color: colors.$orange-yellow;
       position: relative;
     }
     .image {
@@ -55,10 +57,10 @@
     }
   }
   &.green {
-    border-color: #a0b607;
-    background-color: #8bd635ea;
+    border-color: colors.$green;
+    background-color: colors.$green-background;
     .image-background {
-      background-color: #a0b607;
+      background-color: colors.$green;
       position: relative;
     }
     .image {
@@ -73,10 +75,10 @@
     }
   }
   &.blue-purple {
-    border-color: #1f7be8;
-    background-color: #002045;
+    border-color: colors.$blue-purple;
+    background-color: colors.$blue-purple-background;
     .image-background {
-      background-color: #1f7be8;
+      background-color: colors.$blue-purple;
       position: relative;
     }
     .image {
@@ -91,10 +93,10 @@
     }
   }
   &.brown-white {
-    border-color: #e97f02;
-    background-color: #96938e;
+    border-color: colors.$brown-white;
+    background-color: colors.$brown-white-background;
     .image-background {
-      background-color: #e97f02;
+      background-color: colors.$brown-white;
       position: relative;
     }
     .image {
@@ -119,12 +121,24 @@
   }
 
   .label {
-    margin-left: 20px;
     font-weight: 600;
+    margin-left: 20px;
   }
 
-  .remove-button {
+  .delete-button, .add-button {
+    display: flex;
     margin-left: auto;
     cursor: pointer;
   }
+
+  .label-extra-info {
+    display: flex;
+    margin-right: 12px;
+    margin-left: auto;
+  }
+}
+
+#search {
+  width: 90%;
+  margin-bottom: 36px;
 }

@@ -6,13 +6,23 @@ function ProgressBarComponent({ allColors, consumedColors }) {
   const width = Math.floor(100 / allColors.length) + '%';
   return (
     <div id='consumed-colors-progress'>
-      {allColors.map((color) => {
+      {allColors?.map((color) => {
         if (consumedColors.includes(color)) {
           return (
-            <div width={width} className={color + ' active'} key={color.id} />
+            <div
+              width={width}
+              className={color + ' active'}
+              key={`progress-bar-color-${color}`}
+            />
           );
         } else {
-          return <div width={width} className={color} key={color.id} />;
+          return (
+            <div
+              width={width}
+              className={color}
+              key={`progress-bar-color-${color}`}
+            />
+          );
         }
       })}
     </div>

@@ -1,11 +1,6 @@
 // @import "~bootstrap/scss/bootstrap";
+@use 'colors';
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap');
-
-$red-bg-color: #720e00 !default;
-$orange-yellow-bg-color: #dca219aa !default;
-$green-bg-color: #8bd635ea !default;
-$blue-purple-bg-color: #002045 !default;
-$brown-white-bg-color: #96938e !default;
 
 body {
   margin: 0;
@@ -47,7 +42,7 @@ textarea {
 
 a.button {
   font-size: 24px;
-  padding: 12px 16px;
+  padding: 16px 24px;
   border: 2px solid none;
   border-radius: 16px;
   font-weight: 600;
@@ -56,4 +51,18 @@ a.button {
   color: black;
   font-family: 'Work Sans', sans-serif;
   margin-right: 2px;
+}
+
+input[type=text] {
+  font-size: 24px;
+  background-color: #211C23;
+  border-color: #0C0B0D;
+  height: 64px;
+  padding: 0 20px;
+  color: white;
+  outline-color: transparent;
+}
+
+::placeholder {
+  opacity: 0.6;
 }

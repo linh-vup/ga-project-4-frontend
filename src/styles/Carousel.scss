@@ -1,8 +1,4 @@
-$red-bg-color: #F71515 !default;
-$orange-yellow-bg-color: #E6EA23 !default;
-$green-bg-color: #4DE94C!default;
-$blue-purple-bg-color: #4815AA!default;
-$brown-white-bg-color: #96938e!default;
+@use 'colors';
 
 div#carousel-body {
   height: 600px;
@@ -37,7 +33,8 @@ div.item {
   position: absolute;
   width: 300px;
   height: 300px;
-  background-color: coral;
+  border: 2px solid;
+  border-radius: 12px;
   --r: calc(var(--position) - var(--offset));
   --abs: max(calc(var(--r) * -1), var(--r));
   transition: all 0.25s linear;
@@ -48,23 +45,28 @@ div.item {
 
 div.item:nth-of-type(1) {
   --offset: 0;
-  background-color: $red-bg-color;
+  border-color: colors.$red;
+  background-color: colors.$red-background;
 }
 div.item:nth-of-type(2) {
   --offset: 1;
-  background-color: $orange-yellow-bg-color;
+  border-color: colors.$orange-yellow;
+  background-color: colors.$orange-yellow-background;
 }
 div.item:nth-of-type(3) {
   --offset: 2;
-  background-color: $green-bg-color;
+  border-color: colors.$green;
+  background-color: colors.$green-background;
 }
 div.item:nth-of-type(4) {
   --offset: 3;
-  background-color: $blue-purple-bg-color;
+  border-color: colors.$blue-purple;
+  background-color: colors.$blue-purple-background;
 }
 div.item:nth-of-type(5) {
   --offset: 4;
-  background-color: $brown-white-bg-color;
+  border-color: colors.$brown-white;
+  background-color: colors.$brown-white-background;
 }
 
 input:nth-of-type(1) {

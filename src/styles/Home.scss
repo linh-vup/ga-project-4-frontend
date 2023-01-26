@@ -1,51 +1,25 @@
-h1 {
-  font-size: 50px;
-}
+@use "colors";
 
-span {
-  font-weight: bold;
-}
 .rainbow-animation{
-		animation: rainbow 2.5s linear;
+		animation: rainbow 4s linear;
 		animation-iteration-count: infinite;
 }
 
 @keyframes rainbow{
 		100%,0%{
-			color: rgba(244, 73, 73, 0.707);
+			color: colors.$red;
 		}
-		8%{
-			color: rgba(255, 128, 0, 0.695);
+		20%{
+			color: colors.$orange-yellow;
 		}
-		16%{
-			color: rgb(255,255,0);
+		40%{
+			color: colors.$green;
 		}
-		25%{
-			color: rgb(127,255,0);
+		60%{
+			color: colors.$blue-purple;
 		}
-		33%{
-			color: rgb(77, 218, 77);
-		}
-		41%{
-			color: rgb(25, 180, 102);
-		}
-		50%{
-			color: rgb(0,255,255);
-		}
-		58%{
-			color: rgb(0,127,255);
-		}
-		66%{
-			color: rgba(32, 32, 236, 0.826);
-		}
-		75%{
-			color: rgb(127,0,255);
-		}
-		83%{
-			color: rgb(255,0,255);
-		}
-		91%{
-			color: rgb(255,0,127);
+		80%{
+			color: colors.$brown-white;
 		}
 }
 

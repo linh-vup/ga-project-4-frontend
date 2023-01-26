@@ -19,18 +19,18 @@ export default function Navbar() {
   return (
     <div id='nav-bar-wrapper'>
       <Container maxWidth='lg' id='nav-bar'>
-        <NavLink activeClassName='active' to='/'>
+        <NavLink activeclassname='active' to='/'>
           Home
         </NavLink>
         {isLoggedIn ? (
           <>
-            <NavLink activeClassName='active' to='/foodlog/today'>
+            <NavLink activeclassname='active' to='/foodlog/today'>
               Today
             </NavLink>
-            <NavLink activeClassName='active' to='/foodlog/yesterday'>
+            <NavLink activeclassname='active' to='/foodlog/yesterday'>
               Yesterday
             </NavLink>
-            <NavLink activeClassName='active' to='/stats'>
+            <NavLink activeclassname='active' to='/stats'>
               Stats
             </NavLink>
             <Link to='/' onClick={logout} className='right'>
@@ -39,10 +39,10 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <NavLink activeClassName='active' to='/login' className='right'>
+            <NavLink activeclassname='active' to='/login' className='right'>
               Login
             </NavLink>
-            <NavLink activeClassName='active' to='/register' className='right'>
+            <NavLink activeclassname='active' to='/register' className='right'>
               Register
             </NavLink>
           </>

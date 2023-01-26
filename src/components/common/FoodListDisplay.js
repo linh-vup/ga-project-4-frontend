@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { API } from '../../lib/api';
 import { AUTH } from '../../lib/auth';
 import { useLocation, useParams } from 'react-router-dom';
-import { Container, Grid } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import moment from 'moment';
 
-import Search from './Search';
 import FoodListItem from './FoodListItem';
 import ProgressBar from './ProgressBar';
 import Calendar from './Calendar';
@@ -25,7 +23,8 @@ export default function FoodListDisplay() {
   const [colors, setColors] = useState([]);
   const [hasUserDayEntry, setHasUserDayEntry] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [hasEatenRainbow, setHasEatenRainbow] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
   const { id } = useParams();
   const userId = AUTH.getPayload().sub;
@@ -43,14 +42,12 @@ export default function FoodListDisplay() {
   viewedDate = viewedDate.toJSON().slice(0, 10);
 
   useEffect(() => {
-    if (foods.length) {
-      API.GET(API.ENDPOINTS.getAllColors)
-        .then(({ data }) => {
-          setColors(data);
-        })
-        .catch(({ message, response }) => console.error(message, response));
-    }
-  }, [foods.length]);
+    API.GET(API.ENDPOINTS.getAllColors)
+      .then(({ data }) => {
+        setColors(data);
+      })
+      .catch(({ message, response }) => console.error(message, response));
+  }, []);
 
   useEffect(() => {
     setUserDay((userDay) => ({
@@ -71,7 +68,6 @@ export default function FoodListDisplay() {
           setUserDayId(userDay.id);
           setIsUpdated(false);
         } else {
-          setHasEatenRainbow(false);
           setFoods([]);
           setUserDayId(null);
         }
@@ -79,16 +75,26 @@ export default function FoodListDisplay() {
       .catch(({ message, response }) => console.error(message, response));
   }, [userDayId, viewedDate, userId, isUpdated, id]);
 
-  const handleSearchOnChange = (e, newValue) => {
-    console.log('HANDLE SEARCH', { newValue, userDay });
+  useEffect(() => {
+    API.GET(API.ENDPOINTS.search(searchQuery)).then(({ data }) => {
+      if (searchQuery) {
+        setSearchResults(data);
+      } else {
+        setSearchResults([]);
+      }
+    });
+  }, [searchQuery]);
 
+  const addFood = (e) => {
+    const foodId = parseInt(e.currentTarget.dataset.foodItemId);
+    console.log('foodId to add1', e.currentTarget.dataset.foodItemId);
     if (userDayId === null) {
       console.log('POSTING');
       API.POST(
         API.ENDPOINTS.createUserDay,
         {
           ...userDay,
-          foods_consumed: [newValue.id]
+          foods_consumed: [foodId]
         },
         API.getHeaders()
       )
@@ -103,7 +109,7 @@ export default function FoodListDisplay() {
         API.ENDPOINTS.singleUserDay(userDayId),
         {
           ...userDay,
-          foods_consumed: [...foodsConsumedIds, newValue.id]
+          foods_consumed: [...foodsConsumedIds, foodId]
         },
         API.getHeaders()
       )
@@ -117,8 +123,10 @@ export default function FoodListDisplay() {
   };
 
   const handleDelete = (e) => {
-    const listItemId = parseInt(e.target.dataset.foodItemId);
+    const listItemId = parseInt(e.currentTarget.dataset.foodItemId);
     const foodsConsumedIds = userDay.foods_consumed.map((food) => food.id);
+
+    console.log('listItemId delete', e.currentTarget.dataset.foodItemId);
 
     const foodObjectIndexToRemove = foodsConsumedIds.findIndex(
       (foodId) => foodId === listItemId
@@ -129,6 +137,8 @@ export default function FoodListDisplay() {
     }
     const foodArrayToUpdate = [...foodsConsumedIds];
     foodArrayToUpdate.splice(foodObjectIndexToRemove, 1);
+
+    console.log('foodArrayToUpdate', foodArrayToUpdate);
 
     API.PUT(
       API.ENDPOINTS.singleUserDay(userDayId),
@@ -150,18 +160,24 @@ export default function FoodListDisplay() {
   const consumedColorSlugs = Array.from(
     new Set(foods.map((food) => food.color.slug))
   );
+  console.log('allColorSlugs', allColorSlugs);
+  console.log('consumedColorSlugs', consumedColorSlugs);
 
   const userHasCompletedRainbow =
     allColorSlugs.length === consumedColorSlugs.length;
 
   return (
     <>
-      <Grid container spacing={2}>
-        <ProgressBar
-          allColors={allColorSlugs}
-          consumedColors={consumedColorSlugs}
-        />
+      <Grid
+        container
+        spacing={2}
+        sx={{ display: 'flex', justifyContent: 'space-between' }}
+      >
         <Grid item xs={12}>
+          <ProgressBar
+            allColors={allColorSlugs}
+            consumedColors={consumedColorSlugs}
+          />
           {userHasCompletedRainbow ? (
             <h1>Yay, you've eaten the rainbow</h1>
           ) : (
@@ -172,36 +188,54 @@ export default function FoodListDisplay() {
             Your food log for {moment(viewedDate, 'YYYY-MM-DD').format('dddd')}
           </p>
         </Grid>
-        <Grid
-          container
-          sx={{ display: 'flex', justifyContent: 'space-between' }}
-        >
-          <Grid item xs={12} sm={12} md={6}>
-            {hasUserDayEntry ? (
-              <ul id='food-list-items'>
-                {foods?.map((food) => (
-                  <FoodListItem
-                    foodItem={food?.name}
-                    onClick={handleDelete}
-                    className={`${food?.color?.slug} list-item`}
-                    key={food?.id}
-                    value={food?.id}
-                  />
-                ))}
-              </ul>
-            ) : (
-              <p>Nothing logged for this day</p>
-            )}
-          </Grid>
-          <Grid item xs={10} sm={10} md={5}>
-            <Search handleChange={handleSearchOnChange} />
-            {location.pathname === '/foodlog/yesterday' && (
-              <>
-                <h5>Check another day</h5>
-                <Calendar />
-              </>
-            )}
-          </Grid>
+        <Grid item xs={12} md={5}>
+          <h3>Add new</h3>
+          <input
+            type='text'
+            id='search'
+            placeholder='Search for food...'
+            autoComplete='off'
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <ul id='food-list-items'>
+            {searchResults?.map((food) => (
+              <FoodListItem
+                name={food.name}
+                className={`${food.color.slug} list-item`}
+                key={`search-item-${food.id}`}
+                foodId={food.id}
+                showAdd={
+                  !foods.find((consumedFood) => consumedFood.id === food.id)
+                }
+                onAddClicked={addFood}
+              />
+            ))}
+          </ul>
+          {location.pathname === '/foodlog/yesterday' && (
+            <>
+              <h5>Check another day</h5>
+              <Calendar />
+            </>
+          )}
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <h3>Already logged</h3>
+          {hasUserDayEntry ? (
+            <ul id='food-list-items'>
+              {foods?.map((food) => (
+                <FoodListItem
+                  name={food.name}
+                  className={`${food.color.slug} list-item`}
+                  key={`logged-item-${food.id}`}
+                  foodId={food.id}
+                  showDelete={true}
+                  onDeleteClicked={handleDelete}
+                />
+              ))}
+            </ul>
+          ) : (
+            <p>Nothing logged for this day</p>
+          )}
         </Grid>
       </Grid>
     </>
