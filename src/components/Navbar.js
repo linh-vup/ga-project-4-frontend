@@ -38,14 +38,14 @@ export default function Navbar() {
             </Link>
           </>
         ) : (
-          <>
+          <div id='login-and-register-buttons'>
             <NavLink activeclassname='active' to='/login' className='right'>
               Login
             </NavLink>
             <NavLink activeclassname='active' to='/register' className='right'>
               Register
             </NavLink>
-          </>
+          </div>
         )}
       </Container>
     </div>

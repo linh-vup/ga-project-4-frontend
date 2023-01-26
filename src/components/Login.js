@@ -78,9 +78,9 @@ export default function Login() {
               sx={{ mb: 2 }}
             />
           </div>
-          <Button variant='contained' type='submit'>
+          <button type='submit' className='login-register-button'>
             Login
-          </Button>
+          </button>
           {/* <Button onClick={navigateToRegister}>
             Not Registered? Register here
           </Button> */}

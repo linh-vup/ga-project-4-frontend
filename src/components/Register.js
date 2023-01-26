@@ -142,12 +142,19 @@ export default function Register() {
             />
           </div>
           <Box mt={2}>
-            <Button variant='contained' type='submit'>
+            {/* <Button
+              variant='contained'
+              type='submit'
+              className='login-register-button'
+            >
               Register!
-            </Button>
-            <Button onClick={navigateToLogin}>
+            </Button> */}
+            <button type='submit' className='login-register-button'>
+              Register
+            </button>
+            {/* <Button onClick={navigateToLogin}>
               Already Registered? Login here
-            </Button>
+            </Button> */}
           </Box>
         </form>
       </Container>

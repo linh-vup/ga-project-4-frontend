@@ -53,6 +53,19 @@ a.button {
   margin-right: 2px;
 }
 
+button.login-register-button {
+  font-size: 18px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  background-color: #e6ea23;
+  color: black;
+  font-family: 'Work Sans', sans-serif;
+  margin-right: 2px;
+}
+
 input[type='text'] {
   font-size: 24px;
   background-color: #211c23;

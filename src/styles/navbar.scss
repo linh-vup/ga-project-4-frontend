@@ -26,9 +26,16 @@
       color: #E6EA23;
     }
 
-    &.right {
-      margin-right: 0;
-      margin-left: auto;
-    }
+    // &.right {
+    //   margin-right: 0;
+    //   margin-left: auto;
+    // }
+  }
+
+  &.login-and-register-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 0;
   }
 }
