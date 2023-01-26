@@ -7,7 +7,6 @@ export default function PastFoodLog() {
   return (
     <>
       <Container maxWidth='lg'>
-        <Calendar />
         <FoodListDisplay />
       </Container>
     </>

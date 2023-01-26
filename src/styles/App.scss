@@ -47,16 +47,16 @@ a.button {
   border-radius: 16px;
   font-weight: 600;
   text-decoration: none;
-  background-color: #E6EA23;
+  background-color: #e6ea23;
   color: black;
   font-family: 'Work Sans', sans-serif;
   margin-right: 2px;
 }
 
-input[type=text] {
+input[type='text'] {
   font-size: 24px;
-  background-color: #211C23;
-  border-color: #0C0B0D;
+  background-color: #211c23;
+  border-color: #0c0b0d;
   height: 64px;
   padding: 0 20px;
   color: white;
@@ -65,4 +65,20 @@ input[type=text] {
 
 ::placeholder {
   opacity: 0.6;
+}
+
+.share-text {
+  font-size: 18px;
+}
+
+@media (max-width: 480px) {
+  
+  p#times-eaten {
+    display: none;
+  }
+  a.button {
+    font-size: 24px;
+    padding: 12px 12px;
+    margin-top: 32px;
+  }
 }

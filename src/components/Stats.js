@@ -82,7 +82,7 @@ export default function Stats() {
                   key={food?.id}
                   foodId={food?.id}
                   extraInfo={
-                    <p>
+                    <p id='times-eaten'>
                       Eaten <strong>{foodsWithId.length}</strong> times
                     </p>
                   }

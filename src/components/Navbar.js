@@ -1,8 +1,8 @@
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { useNavigate, NavLink, Link, useParams } from 'react-router-dom';
+import { useNavigate, NavLink, Link } from 'react-router-dom';
+import { Container } from '@mui/material';
+
 import { useAuthenticated } from '../hook/useAuthenticated';
 import { AUTH } from '../lib/auth';
-import Container from '@mui/material/Container';
 
 import '../styles/navbar.scss';
 

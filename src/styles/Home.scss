@@ -5,6 +5,10 @@
 		animation-iteration-count: infinite;
 }
 
+.fruits-logo {
+  margin-bottom: 36px;
+}
+
 @keyframes rainbow{
 		100%,0%{
 			color: colors.$red;

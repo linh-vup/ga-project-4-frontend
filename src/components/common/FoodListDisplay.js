@@ -8,6 +8,7 @@ import moment from 'moment';
 import FoodListItem from './FoodListItem';
 import ProgressBar from './ProgressBar';
 import Calendar from './Calendar';
+import SocialSharebuttons from './SocialShareButtons';
 
 import '../../styles/items.scss';
 
@@ -179,7 +180,15 @@ export default function FoodListDisplay() {
             consumedColors={consumedColorSlugs}
           />
           {userHasCompletedRainbow ? (
-            <h1>Yay, you've eaten the rainbow</h1>
+            <>
+              <h1>Yay, you've eaten the rainbow</h1>
+              <p className='share-text'>
+                Flex it here:
+                <span>
+                  <SocialSharebuttons />
+                </span>
+              </p>
+            </>
           ) : (
             <h1>Keep on going!</h1>
           )}
@@ -211,7 +220,7 @@ export default function FoodListDisplay() {
               />
             ))}
           </ul>
-          {location.pathname === '/foodlog/yesterday' && (
+          {!(location.pathname === '/foodlog/today') && (
             <>
               <h5>Check another day</h5>
               <Calendar />
