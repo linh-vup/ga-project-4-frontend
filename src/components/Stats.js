@@ -31,19 +31,16 @@ export default function Stats() {
     return dateArray;
   }
 
-  const dates = getdateRange(dateLastWeek, today);
-  console.log(dates);
+  // const dates = getdateRange(dateLastWeek, today);
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.getAllUserDays, API.getHeaders())
       .then(({ data }) => {
-        console.log('DATA FROM GET ALL USER DAYS', data);
         setAllUserDays(data);
 
         const foodsConsumedInAllUserDays = data.map((userday) => {
           return userday.foods_consumed.map((food) => food);
         });
-        console.log({ foods: foodsConsumedInAllUserDays });
 
         const nestedFoods = [];
         for (let i = 0; i < foodsConsumedInAllUserDays.length; i++) {
@@ -51,9 +48,7 @@ export default function Stats() {
             nestedFoods.push(foodsConsumedInAllUserDays[i][j]);
           }
         }
-        console.log('NESTED FOODS', nestedFoods);
         setAllFoods(nestedFoods);
-        console.log('ALL FOODS FROM CALL ', nestedFoods);
       })
       .catch(({ message, response }) => console.error(message, response));
   }, []);

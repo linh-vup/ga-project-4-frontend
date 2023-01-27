@@ -64,8 +64,6 @@ export default function FoodListDisplay() {
           setHasUserDayEntry(true);
           setUserDay(userDay);
           setFoods(userDay.foods_consumed);
-          console.log('DATA RETURNED FROM GETALLUSERDAY CALL', data);
-          console.log('USER DAY foods consumed', userDay.foods_consumed);
           setUserDayId(userDay.id);
           setIsUpdated(false);
         } else {
@@ -88,9 +86,7 @@ export default function FoodListDisplay() {
 
   const addFood = (e) => {
     const foodId = parseInt(e.currentTarget.dataset.foodItemId);
-    console.log('foodId to add1', e.currentTarget.dataset.foodItemId);
     if (userDayId === null) {
-      console.log('POSTING');
       API.POST(
         API.ENDPOINTS.createUserDay,
         {
@@ -127,19 +123,14 @@ export default function FoodListDisplay() {
     const listItemId = parseInt(e.currentTarget.dataset.foodItemId);
     const foodsConsumedIds = userDay.foods_consumed.map((food) => food.id);
 
-    console.log('listItemId delete', e.currentTarget.dataset.foodItemId);
-
     const foodObjectIndexToRemove = foodsConsumedIds.findIndex(
       (foodId) => foodId === listItemId
     );
     if (foodObjectIndexToRemove === -1) {
-      console.log('returned index -1');
       return;
     }
     const foodArrayToUpdate = [...foodsConsumedIds];
     foodArrayToUpdate.splice(foodObjectIndexToRemove, 1);
-
-    console.log('foodArrayToUpdate', foodArrayToUpdate);
 
     API.PUT(
       API.ENDPOINTS.singleUserDay(userDayId),
@@ -161,8 +152,6 @@ export default function FoodListDisplay() {
   const consumedColorSlugs = Array.from(
     new Set(foods.map((food) => food.color.slug))
   );
-  console.log('allColorSlugs', allColorSlugs);
-  console.log('consumedColorSlugs', consumedColorSlugs);
 
   const userHasCompletedRainbow =
     allColorSlugs.length === consumedColorSlugs.length;
