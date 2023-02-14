@@ -53,7 +53,9 @@ Timeframe: 8 days
 
 # Demonstration
 
-[Insert gif]
+![Eat the Rainbow Walkthrough - Home page and Today Log](./src/images/project_walkthrough1.gif 'Eat the Rainbow Walkthrough - Home page and Today Log')
+
+![Eat the Rainbow Walkthrough - Past Logs, Sharing and Stats Page](./src/images/project_walkthrough2.gif 'Eat the Rainbow Walkthrough - Past Logs, Sharing and Stats Page')
 
 User Flow:
 
@@ -187,6 +189,7 @@ Given the brief and the tight deadline, I’m really proud of the result. It may
 
 # Bugs & Future Improvements
 
+- When changing between logs, sometimes it doesn't fetch the correct date's data. I only discovered this bug towards the deadline of the project and couldn't find the pattern or reason in time to fix. This would definitely be something I'd go back to to investigate.
 - Refactor my codebase: I didn’t allow enough time towards the end of my projects to review my code and to refactor it more. I know that I’m using some states in my FoodListDisplay component that I could leave out by relying on other given states (e.g. rendering information based on state conditions).
 - I want to add functionality to the stats page to filter by week and months and/or to display information in graphs for a visually engaging overview.
 - At the moment, there’s no UI for admin functionality (e.g. to add more food items and currently there’s only a limited amount of food items available to add from), so I’d like to add that in future iterations.
