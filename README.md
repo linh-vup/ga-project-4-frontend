@@ -12,7 +12,7 @@ Test account credentials: email:`testme@testme.com`, password: `Password!1`
 
 # Getting Started
 
-- Clone or download this source code and follow instructions on getting started for the backend
+- Clone or download this and the [backend's](https://github.com/linh-vup/ga_project-4-backend) source code
 - In backend CLI:
   - Pre-requisites: Python, Pip
   - Install dependencies: `pip install pipenv`
@@ -38,6 +38,7 @@ Timeframe: 8 days
 - React
 - Python
 - Django
+- PostgreSQL
 - HTML5, CSS, Sass
 - MUI
 - Axios
