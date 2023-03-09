@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API } from '../lib/api';
-import { AUTH } from '../lib/auth';
+// import { AUTH } from '../lib/auth';
 import { Container, Grid } from '@mui/material';
 
 import FoodListItem from './common/FoodListItem';
@@ -8,30 +8,6 @@ import FoodListItem from './common/FoodListItem';
 export default function Stats() {
   const [allUserDays, setAllUserDays] = useState([]);
   const [allFoods, setAllFoods] = useState(null);
-  const [dateRange, setDateRange] = useState();
-  const userId = AUTH.getPayload().sub;
-
-  let today = new Date();
-  let todayToAmend = new Date(today);
-  let dateLastWeek = new Date(todayToAmend.setDate(todayToAmend.getDate() - 7));
-
-  today = today.toJSON().slice(0, 10);
-  dateLastWeek = dateLastWeek.toJSON().slice(0, 10);
-
-  function getdateRange(startDate, endDate, steps = 1) {
-    const dateArray = [];
-    let currentDate = new Date(startDate);
-
-    while (currentDate <= new Date(endDate)) {
-      dateArray.push(new Date(currentDate).toJSON().slice(0, 10));
-      // Use UTC date to prevent problems with time zones and DST
-      currentDate.setUTCDate(currentDate.getUTCDate() + steps);
-    }
-
-    return dateArray;
-  }
-
-  // const dates = getdateRange(dateLastWeek, today);
 
   useEffect(() => {
     API.GET(API.ENDPOINTS.getAllUserDays, API.getHeaders())

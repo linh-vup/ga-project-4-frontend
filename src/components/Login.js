@@ -2,19 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../lib/api';
 import { AUTH } from '../lib/auth';
-// import { useAuthenticated } from '../hook/useAuthenticated';
 import { Container } from '@mui/system';
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 export default function Login() {
   const navigate = useNavigate();
   const [formFields, setFormFields] = useState({ email: '', password: '' });
   const [error, setError] = useState({ email: false, password: false });
-  // const [isLoggedIn] = useAuthenticated();
-
-  // if (isLoggedIn) {
-  //   navigate('/');
-  // }
 
   const handleChange = (e) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });
@@ -33,8 +27,6 @@ export default function Login() {
       });
   };
 
-  // const navigateToRegister = () => navigate('/');
-
   return (
     <section className='LoginRegister'>
       <Container
@@ -49,6 +41,7 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div>
             <TextField
+              fullWidth
               size='small'
               name='email'
               id='email'
@@ -81,9 +74,6 @@ export default function Login() {
           <button type='submit' className='login-register-button'>
             Login
           </button>
-          {/* <Button onClick={navigateToRegister}>
-            Not Registered? Register here
-          </Button> */}
         </form>
       </Container>
     </section>
